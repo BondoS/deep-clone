@@ -4,7 +4,20 @@
 
 - A copy just looks like the old thing, but isn’t. When you change the copy, you expect the original thing to stay the same, whereas the copy changes.
 
-In programming, we store values in variables. Making a copy means that you initiate a new variable with the same value(s). However, there is a big potential pitfall to consider: deep copying vs. shallow copying. A deep copy means that all of the values of the new variable are copied and disconnected from the original variable. A shallow copy means that certain (sub-)values are still connected to the original variable.[^1]
+- In programming, we store values in variables. Making a copy means that you initiate a new variable with the same value(s). However, there is a big potential pitfall to consider: deep copying vs. shallow copying. A _deep_ copy means that all of the values of the new variable are _copied and disconnected from the original variable_. A _shallow_ copy means that _certain (sub-)values are still connected to the original variable_.[^1]
+
+- Examples of shallow coping
+
+  1. `var newObject = oldObject`
+  2. `var newObject = [...oldObject]`
+  3. `var newObject = Object.assign({}, oldObject)`
+
+- On this project we'll implement two versions of deep coping
+
+1.  Basic version which will not work for functions and circular reference situation. `JSON.parse(JSON.stringify(originalObj))`
+2.  Advanced version which will recursively traverse the original Object "Please check deepCloneAdvanced function in deepClone.mjs file"
+
+---
 
 ### - Written in JavaScript
 
