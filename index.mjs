@@ -12,6 +12,11 @@ import { test } from './test.mjs';
       },
     },
     func: () => 'test func',
+    set: new Set([1, 5, 7]),
+    map: new Map([
+      ['key1', 'val1'],
+      ['key2', 'val2'],
+    ]),
   };
 
   const copiedObjBasic = deepCloneBasic(originalObj);
@@ -25,9 +30,11 @@ import { test } from './test.mjs';
 
   test('deepCloneBasic', () =>
     originalObj.parent.child1.child2 === 'msg changed' &&
-    copiedObjBasic.parent.child1.child2 === 'msg from child2');
+    copiedObjBasic.parent.child1.child2 === 'msg from child2' &&
+    copiedObjBasic.set.size !== 3);
 
   test('deepCloneAdvanced', () =>
     copiedObjAdvanced.parent.child1.child2 === 'msg from child2' &&
-    copiedObjAdvanced.func() === 'test func');
+    copiedObjAdvanced.func() === 'test func' &&
+    copiedObjAdvanced.set.size === 3) && copiedObjAdvanced.map.has('Jessie');
 })();

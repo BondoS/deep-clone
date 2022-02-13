@@ -1,18 +1,38 @@
+import { enhancedTypeOf } from './utils.mjs';
 /*
- * Basic deep clone, this will not work in case of copying
- *  a function or circular references.
+ * Basic deep clone, this will NOT work in case of copying
+ *  a function or Set or Map or circular references issue.
  */
 
 export const deepCloneBasic = (originalObj) =>
   JSON.parse(JSON.stringify(originalObj));
 
 /*
- * Advanced deep clone, this will handle Objects, Arrays and fix circular reference issue.
+ * Advanced deep clone, this will handle Sets. Objects, Arrays and fix circular reference issue.
  */
 export const deepCloneAdvanced = (originalObj, map = new WeakMap()) => {
+  let clone = null;
+  // Handle Set
+  if (enhancedTypeOf(originalObj) === 'Set') {
+    clone = new Set();
+    originalObj.forEach((element) => {
+      clone.add(deepCloneAdvanced(element));
+    });
+    return clone;
+  }
+
+  // Handle Map
+  if (enhancedTypeOf(originalObj) === 'Map') {
+    clone = new Map();
+    for (const [key, value] of originalObj) {
+      clone.set(key, deepCloneAdvanced(value));
+    }
+    return clone;
+  }
+
   if (typeof originalObj === 'object') {
     // Handle Object or Array types.
-    let clone = Array.isArray(originalObj) ? [] : {};
+    clone = Array.isArray(originalObj) ? [] : {};
     // Fixing circular reference issue by returning the reference of an object if it was saved from previous iteration.
     if (map.get(originalObj)) return map[originalObj];
     // Use weakMap to save a copy of current Object reference in memory.
@@ -23,6 +43,6 @@ export const deepCloneAdvanced = (originalObj, map = new WeakMap()) => {
     }
     return clone;
   }
-  // basic/exit condition
+  // basic/exit condition (for other types including primitives and functions....)
   return originalObj;
 };
