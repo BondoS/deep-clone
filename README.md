@@ -9,7 +9,7 @@
 - Examples of shallow coping
 
   1. `var newObject = oldObject`
-  2. `var newObject = [...oldObject]`
+  2. `var newObject = {...oldObject}`
   3. `var newObject = Object.assign({}, oldObject)`
 
 >
