@@ -14,7 +14,7 @@
 
 >
 
-- On this project we'll implement two versions of deep coping
+- Examples of deep coping
   1.  Basic version which will not work for functions and circular reference situation. `JSON.parse(JSON.stringify(originalObj))`
   2.  Advanced version which will recursively traverse the original Object "Please check deepCloneAdvanced function in deepClone.mjs file"
 
